@@ -1,367 +1,217 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="Resting-state EEG-to-fMRI Synthesis with Multi-dimensional Feature Mapping, NeuroBOLT.">
-  <meta name="keywords" content="NeuroBOLT, EET2fMRI">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NeuroBOLT</title>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GHQGWV0Q63"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-GHQGWV0Q63');
-  </script>
-  <script>
-    function showVideo() {
-      var showGifButton = document.getElementById("showGifButton");
-      showGifButton.style.display = "none";
-      
-      var brainVideo = document.getElementById("brainVideo");
-      brainVideo.style.display = "inline-block";
-    }
-    function showButton() {
-      var brainVideo = document.getElementById("brainVideo");
-      brainVideo.style.display = "none";
-      
-      var showGifButton = document.getElementById("showGifButton");
-      showGifButton.style.display = "inline-block";
-    }
-  </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" type="image/gif" href="./static/images/neurobolt_icon.png">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Affine Optimization for Image Registration</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #24292e;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .author-list {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        .affiliations {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .image-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .image-container img {
+            width: 100%;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+        }
+        .caption {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            text-align: justify;
+        }
+        h1, h2, h3 {
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 0.3em;
+        }
+        .links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 8px;
+            background: #0366d6;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .button:hover {
+            background: #0255b3;
+        }
+        pre {
+            background: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #0366d6;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
 </head>
 <body>
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://www.cchanglab.net/home">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://arxiv.org/abs/2311.04234">
-            SirenED
-          </a>
-          <!-- <a class="navbar-item" href="https://littlepure2333.github.io/GFlow">
-            GFlow
-          </a> -->
-<!--           <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a> -->
+    <div class="header">
+        <h1>Neural Affine Optimization for Image Registration</h1>
+        
+        <div class="author-list">
+            Hang Zhang, Jiacheng Wang, Xiang Chen, Renjiu Hu, Min Liu, Yaonan Wang, Rongguang Wang, Jinming Duan, Noel Codella
         </div>
-      </div>
+        
+        <div class="affiliations">
+            Cornell University | Vanderbilt University | Hunan University | University of Pennsylvania | University of Manchester | Microsoft
+        </div>
+        
+        <div class="links">
+            <a href="#" class="button">Paper</a>
+            <a href="#" class="button">Code (Coming Soon)</a>
+            <a href="#" class="button">IEEE TMI 2024</a>
+        </div>
     </div>
 
-  </div>
-</nav>
-
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">NeuroBOLT: Resting-state EEG-to-fMRI Synthesis with Multi-dimensional Feature Mapping</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://soupeeli.github.io/">Yamin Li</a>,</span>
-            <span class="author-block">
-              <a href="https://angeloucn.github.io/">Ange Lou</a>,</span>
-            <span class="author-block">
-              <a href="https://www.vanderbilt.edu/vise/visepeople/ziyuan-roger-xu/">Ziyuan Xu</a>,</span>
-            <span class="author-block">
-              <a href="">Shengchao Zhang</a>,</span>
-            <span class="author-block">
-              <a href="">Shiyu Wang</a>,</span>
-            <span class="author-block">
-              <a href="https://www.vumc.org/surgical-sciences/person/dario-j-englot-md-phd">Dario J. Englot</a>,
-            </span>
-            <span class="author-block">
-              <a href="https://skolouri.github.io/">Soheil Kolouri</a>,
-            </span>
-            <span class="author-block">
-              <a href="https://dcmoyer.github.io/">Daniel Moyer</a>,
-            </span>
-            <span class="author-block">
-              <a href="https://rgbayrak.github.io/">Roza G. Bayrak</a>,
-            </span>
-            <span class="author-block">
-              <a href="https://engineering.vanderbilt.edu/bio/?pid=catie-chang">Catie Chang</a>
-            </span>
-
-
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">Vanderbilt University</span>
-          </div>
-
-          <div class="is-size-4 publication-authors" style="margin-top: 12px;">
-            <span class="author-block"><b>NeurIPS 2024</b></span>
-          </div>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2410.05341"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2410.05341"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a 
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code (coming soon)</span>
-                  </a>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <h2>Abstract</h2>
+    <div class="highlight-box">
+        Affine registration is crucial in medical image analysis but faces challenges when matching sparse features, such as retinal vessels and filamentous collagen fibers in second-harmonic generation (SHG) and bright-field (BF) images. End-to-end learning-based approaches struggle with minimal effective gradients from loss back-propagation of these sparse features, while descriptor matching methods, though helpful, lack fidelity loss and leave the matching process open-looped. To address these issues, we propose Neural Affine Optimization (NeOn), which implicitly approximates discrete optimization using a few neural network layers, combined with a sampling-regression layer to handle affine transformations. NeOn allows iterative refinement with fidelity loss and provides a flexible transition between a purely affine configuration and a linear weighted blend of affine and deformation fields.
     </div>
-  </div>
-</section>
 
-<section class="hero teaser ">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- <img src="./static/images/neurobolt_overview.png" alt="teaser" style="width: 100%; height: auto;"> -->
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Our proposed <span class="dnerf"><b>NeuroBOLT</b></span> can reconstruct fMRI timecourse from arbitrary region-of-interest from EEG, benefiting from the EEG representation learning from multi-dimensional aspects - spatial, temporal, and spectral. 
-      </h2>
+    <h2>Problem Statement</h2>
+    <div class="image-container">
+        <img src="sparsed_gradient.png" alt="Gradient Backflow Limitation">
+        <div class="caption">
+            Visual illustration of the issue of limited gradient backflow. The comparison shows retinal vessel and SHG images with their corresponding horizontal translation differences, highlighting areas where loss gradient can be effectively back-propagated.
+        </div>
     </div>
-  </div>
-</section>
 
-
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          
-          <p>
-            <font color="#ba7b86"><b>Functional magnetic resonance imaging (fMRI)</b></font> is an indispensable tool in modern neuroscience, 
-            providing a non-invasive window into whole-brain dynamics at millimeter-scale spatial resolution. 
-            However, <font color="#ba7b86"><b>fMRI</b></font> is constrained by issues such as <b>high operation costs</b> and <b>immobility</b>. 
-            With the rapid advancements in cross-modality synthesis and brain decoding, the use of deep neural 
-            networks has emerged as a promising solution for inferring whole-brain, high-resolution <font color="#ba7b86"><b>fMRI</b></font> features 
-            directly from <font color="#698cbf"><b>electroencephalography (EEG)</b></font>, a <b>more widely accessible</b> and <b>portable</b> neuroimaging modality. 
-            Nonetheless, the complex projection from neural activity to <font color="#ba7b86"><b>fMRI</b></font> hemodynamic responses and the spatial 
-            ambiguity of <font color="#698cbf"><b>EEG</b></font> pose substantial challenges both in modeling and interpretability. 
-            Relatively few studies to date have developed approaches for <font color="#698cbf"><b>EEG</b></font><b>-<font color="ba7b86">fMRI</font> translation</b>, and although they have made significant strides, 
-            the inference of <font color="#ba7b86"><b>fMRI</b></font> signals in a given study has been limited to a small set of brain areas and to a single condition 
-            (i.e., either resting-state or a specific task). The capability to predict <font color="#ba7b86"><b>fMRI</b></font> signals in other brain areas, 
-            as well as to generalize across conditions, remain critical gaps in the field. 
-          </p>
-          <p>
-            To tackle these challenges, 
-            we introduce a novel and generalizable framework: <span class="dnerf"><b>NeuroBOLT</b></span>, i.e., <b>Neuro-to-BOLD Transformer</b>, 
-            which leverages multi-dimensional representation learning from temporal, spatial, and spectral domains to translate 
-            raw <font color="#698cbf"><b>EEG</b></font> data to the corresponding <font color="#ba7b86"><b>fMRI</b></font> activity signals across 
-            the brain. Our experiments demonstrate that <span class="dnerf"><b>NeuroBOLT</b></span> 
-            effectively reconstructs resting-state <font color="#ba7b86"><b>fMRI</b></font> signals from primary sensory, high-level cognitive areas, and 
-            deep subcortical brain regions, achieving state-of-the-art accuracy and significantly advancing the integration of these two modalities.
-          </p>
+    <h2>Method</h2>
+    <div class="image-container">
+        <img src="neon_framework.png" alt="NeOn Framework">
+        <div class="caption">
+            The proposed Neural Affine Optimization (NeOn) framework. Our method combines neural network layers with a sampling-regression approach for handling affine transformations.
         </div>
-      </div>
     </div>
-    <!--/ Abstract. -->
 
-    <!-- Paper video. -->
-    <!-- <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div> -->
-    <!--/ Paper video. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Method</h2>
-        <img src="./static/images/neurobolt_model.png" alt="method" style="width: 80%; height: auto;">
-        <div class="content has-text-justified">
-          <!-- <p>
-            <span class="dnerf"><b>MindBridge</b></span> first adaptively unifies the fMRI voxels \(V_s\) to a unified size \(v_s=f(V_s)\) 
-            using a biologically-inspired aggregation function \(f\). Then <span class="dnerf"><b>MindBridge</b></span> projects different 
-            subjects' aggregated fMRI voxels \(v_s\) to an intermediate semantic embedding 
-            \(e_s=\mathcal{E}_s(v_s)\) using a subject-wise brain embedder \(\mathcal{E}_s\). 
-            To ensure that semantic embeddings from different subjects reside in a common shared space, 
-            we propose a novel cyclic fMRI reconstruction mechanism. This mechanism relies on an additional 
-            subject-wise brain builder \(\mathcal{B}_s\) to reconstruct the unified fMRI voxels \(\hat{v}_s=\mathcal{B}_s(e_s)\).
-            Once the semantic embeddings are obtained, a brain translator \(\mathcal{T}\) translates them 
-            into two embeddings, \((\hat{e}_I, \hat{e}_T)=\mathcal{T}(e_s)\), representing the predicted 
-            CLIP image and text embeddings, which are utilized to reconstruct images through versatile diffusion model.
-          </p> -->
-        </div>
-      </div>
+    <h2>Datasets</h2>
+    <div class="highlight-box">
+        <h3>FIRE Dataset</h3>
+        <p>Mono-modal retinal vessel dataset with 39 subjects and 134 image pairs (2912×2912 pixels, 45° FOV)</p>
+        
+        <h3>CF-FA Dataset</h3>
+        <p>Multi-modal diabetic retinal dataset with 59 subjects, combining Fractional Anisotropy and Color Fundus images (720×576 pixels)</p>
+        
+        <h3>SHG-BF Dataset</h3>
+        <p>Learn2Reg Challenge 2024 Task 3 dataset with 10 image pairs, combining Bright Field microscopy with Second Harmonic Generation imaging</p>
     </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3 ">Results</h2>
-        <div class="content has-text-justified">
-          <p>
-            <b>Resting-state intra-subject prediction results.</b> (A) The parcellation of the chosen ROIs. (B) The distribution of 
-            prediction performance (Pearson's correlation values), with example time-series reconstructions that represent 
-            performance levels near the mean (indicated by the small grey arrow in the histogram). 
-          </p>
-          <img src="./static/images/neurobolt_intrarest.png" alt="cross-subject results" style="width: 100%; height: auto;">
+    <h2>Results</h2>
+    <div class="image-container">
+        <img src="qualitative_fire.png" alt="Qualitative Results">
+        <div class="caption">
+            Qualitative comparison of registration results on the FIRE dataset, demonstrating NeOn's superior performance in handling sparse features.
         </div>
-
-        <div class="content has-text-justified">
-          <p>
-            <b>Examples of reconstruction of the unseen scans.</b> Scans with the <b>median</b> performance are shown.
-          </p>
-          <div style="width: 100%; justify-content: center; display: flex; flex-direction: column; align-items: center;">
-            <img src="./static/images/neurobolt_interrest.png" alt="cross-subject results" style="width: 80%; margin: auto;">
-            <p>
-              <span style="color: gray; "><br />Please refer to the paper linked above for additional visualizations, as well as detailed quantitative and ablation studies.</span>
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
+    For the quantitative comparison, please refer to the details in the orignal paper.
+
+   <h2>Implementation</h2>
+    <div class="highlight-box">
+        <h3>FIRE Dataset</h3>
+        <ol>
+            <li>Feature Extraction:
+                <ul>
+                    <li>Use LWNet (<a href="https://github.com/agaldran/lwnet">GitHub</a>) to extract vessel features</li>
+                    <li>Store extracted features in 'FIRE_cnn' folder</li>
+                </ul>
+            </li>
+            <li>Run Optimization:
+                <pre>python test_neon_fire.py --ori_size '(2912,2912)' --img_size '(1024,1024)' temp=0.001 ks=1 alpha=1</pre>
+                Parameters:
+                <ul>
+                    <li><code>ori_size</code>: Original image dimensions</li>
+                    <li><code>img_size</code>: Input image size for processing</li>
+                    <li><code>temp</code>: Temperature parameter</li>
+                    <li><code>ks</code>: Kernel size</li>
+                    <li><code>alpha</code>: Blending parameter</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>CF-FA Dataset</h3>
+        <ol>
+            <li>Feature Extraction:
+                <ul>
+                    <li>For fundus images: Use LWNet (<a href="https://github.com/agaldran/lwnet">GitHub</a>)</li>
+                    <li>For FA images: Use DeepVesselSeg4FA (<a href="https://github.com/ShamaLabUR/DeepVesselSeg4FA">GitHub</a>)</li>
+                    <li>Store all features in 'CFFA_cnn' folder</li>
+                </ul>
+            </li>
+            <li>Run Optimization:
+                <pre>python test_neon_cffa.py --ori_size '(576,720)' --img_size '(576,720)' temp=0.001 ks=1 alpha=1</pre>
+            </li>
+        </ol>
+
+        <h3>SHG-BF Dataset</h3>
+        <ol>
+            <li>Feature Extraction Training:
+                <ul>
+                    <li>We provide contrastive-based COMIR feature extraction with XFeat prealignment</li>
+                    <pre>python train_shgbf.py -m tiramisuAndXfeatComplex111Msk1Ps128 -bs 1 --gpu_id 0 \
+    ti_pretrained=1 enable_grad_xfeat=1 xf_pretrained=1 --is_msk 1 --patch_size 128</pre>
+                </ul>
+            </li>
+            <li>Run Optimization:
+                <pre>python test_neon_shgbf.py -m tiramisuAndXfeatComplex -bs 1 --gpu_id 0 --load_ckpt none --is_first_half 1</pre>
+            </li>
+        </ol>
+    </div>
 
 
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@misc{li2024neuroboltrestingstateeegtofmrisynthesis,
-      title={NeuroBOLT: Resting-state EEG-to-fMRI Synthesis with Multi-dimensional Feature Mapping}, 
-      author={Yamin Li and Ange Lou and Ziyuan Xu and Shengchao Zhang and Shiyu Wang and Dario J. Englot and Soheil Kolouri and Daniel Moyer and Roza G. Bayrak and Catie Chang},
-      year={2024},
-      eprint={2410.05341},
-      archivePrefix={arXiv},
-      primaryClass={eess.IV},
-      url={https://arxiv.org/abs/2410.05341}, 
+    <h2>Citation</h2>
+    <pre>
+@article{zhang2024neural,
+    title={Neural Affine Optimization for Image Registration},
+    author={Zhang, Hang and Wang, Jiacheng and Chen, Xiang and Hu, Renjiu and Liu, Min and 
+            Wang, Yaonan and Wang, Rongguang and Duan, Jinming and Codella, Noel},
+    journal={IEEE Transactions on Medical Imaging},
+    year={2024}
 }
-</code></pre>
-  </div>
-  <!-- <div style="max-width: 300px; margin: 0 auto;">
-    <script type="text/javascript" id="clustrmaps" src="https://clustrmaps.com/map_v2.js?d=RS-h-PPd6DfhQaf8Lc1z8fVNaqcq1hrS4yJRa2HWah8&cl=ffffff&w=a"></script>
-  </div> -->
 
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="https://arxiv.org/abs/2410.05341">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/soupeeli" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-      <!-- <button id="showGifButton" onclick="showVideo()" style="display: inline-block; border: none; background: none; font-size: 1.6em; width: auto; height: auto; vertical-align: bottom; margin-left: -7px">
-        🤯
-      </button>
-      <video id="brainVideo" src="static/images/brain.mp4" onclick="showButton()" autoplay muted loop style="width: auto; height: 26px; display: none; vertical-align:sub"></video> -->
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            Huge thanks to <a
-              href="https://github.com/nerfies/nerfies.github.io">Nerifies</a> for sharing the project page template.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+@article{wang2024fidelity,
+    title={Fidelity-Imposed Displacement Editing for the Learn2Reg 2024 SHG-BF Challenge},
+    author={Wang, Jiacheng and Chen, Xiang and Hu, Renjiu and Wang, Rongguang and Liu, Min and 
+            Wang, Yaonan and Wang, Jiazheng and Li, Hao and Zhang, Hang},
+    journal={arXiv preprint arXiv:2410.20812},
+    year={2024}
+}</pre>
 
 </body>
 </html>
