@@ -30,14 +30,32 @@
         }
         .image-container {
             width: 100%;
-            max-width: 800px;
             margin: 20px auto;
             text-align: center;
         }
+        
+        .image-container.large {
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .image-container.medium {
+            width: 80%;
+            max-width: 800px;
+        }
+        
+        .image-container.small {
+            width: 60%;
+            max-width: 600px;
+        }
+        
         .image-container img {
             width: 100%;
+            height: auto;
             border: 1px solid #e1e4e8;
             border-radius: 6px;
+            display: block;
+            margin: 0 auto;
         }
         .caption {
             font-size: 0.9em;
@@ -105,21 +123,23 @@
         Affine registration is crucial in medical image analysis but faces challenges when matching sparse features, such as retinal vessels and filamentous collagen fibers in second-harmonic generation (SHG) and bright-field (BF) images. End-to-end learning-based approaches struggle with minimal effective gradients from loss back-propagation of these sparse features, while descriptor matching methods, though helpful, lack fidelity loss and leave the matching process open-looped. To address these issues, we propose Neural Affine Optimization (NeOn), which implicitly approximates discrete optimization using a few neural network layers, combined with a sampling-regression layer to handle affine transformations. NeOn allows iterative refinement with fidelity loss and provides a flexible transition between a purely affine configuration and a linear weighted blend of affine and deformation fields.
     </div>
 
-    <h2>Problem Statement</h2>
-    <div class="image-container">
-        <img src="sparsed_gradient.png" alt="Gradient Backflow Limitation">
+<h2>Problem Statement</h2>
+    <div class="image-container medium">
+        <img src="./static/images/sparse_gradients.png" alt="Gradient Backflow Limitation">
         <div class="caption">
             Visual illustration of the issue of limited gradient backflow. The comparison shows retinal vessel and SHG images with their corresponding horizontal translation differences, highlighting areas where loss gradient can be effectively back-propagated.
         </div>
     </div>
 
-    <h2>Method</h2>
-    <div class="image-container">
-        <img src="neon_framework.png" alt="NeOn Framework">
+       <h2>Method</h2>
+    <div class="image-container small">
+        <img src="./static/images/neon_framework.png" alt="NeOn Framework">
         <div class="caption">
             The proposed Neural Affine Optimization (NeOn) framework. Our method combines neural network layers with a sampling-regression approach for handling affine transformations.
         </div>
     </div>
+
+
 
     <h2>Datasets</h2>
     <div class="highlight-box">
@@ -134,8 +154,8 @@
     </div>
 
     <h2>Results</h2>
-    <div class="image-container">
-        <img src="qualitative_fire.png" alt="Qualitative Results">
+    <div class="./static/images/image-container large">
+        <img src="./static/images/qualitative_fire_resized.png" alt="Qualitative Results">
         <div class="caption">
             Qualitative comparison of registration results on the FIRE dataset, demonstrating NeOn's superior performance in handling sparse features.
         </div>
