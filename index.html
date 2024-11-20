@@ -123,6 +123,54 @@
         Affine registration is crucial in medical image analysis but faces challenges when matching sparse features, such as retinal vessels and filamentous collagen fibers in second-harmonic generation (SHG) and bright-field (BF) images. End-to-end learning-based approaches struggle with minimal effective gradients from loss back-propagation of these sparse features, while descriptor matching methods, though helpful, lack fidelity loss and leave the matching process open-looped. To address these issues, we propose Neural Affine Optimization (NeOn), which implicitly approximates discrete optimization using a few neural network layers, combined with a sampling-regression layer to handle affine transformations. NeOn allows iterative refinement with fidelity loss and provides a flexible transition between a purely affine configuration and a linear weighted blend of affine and deformation fields.
     </div>
 
+<h2>Demo: Deformation Change Among Iterations</h2>
+
+<!-- Example 1 -->
+<div style="margin-bottom: 40px;">
+    <h3>Example 1: Retinal Vessel Alignment</h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <!-- GIF Section -->
+        <div style="flex: 1; min-width: 300px;">
+            <img src="./static/gifs/A02_video.gif" alt="Deformation Change GIF - Example 1" style="width: 100%; height: auto; border: 1px solid #e1e4e8; border-radius: 6px;">
+            <div class="caption">
+                Moving Image deformable change over time.
+            </div>
+        </div>
+
+        <!-- Static Image Section -->
+        <div style="flex: 1; min-width: 300px;">
+            <img src="./static/images/A02_2.jpg" alt="Static Deformation Visualization - Example 1" style="width: 100%; height: auto; border: 1px solid #e1e4e8; border-radius: 6px;">
+            <div class="caption">
+		Fixed Image.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Example 2 -->
+<div style="margin-bottom: 40px;">
+    <h3>Example 2: SHG-BF Image Alignment</h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <!-- GIF Section -->
+        <div style="flex: 1; min-width: 300px;">
+            <img src="./static/gifs/P35_video.gif" alt="Deformation Change GIF - Example 2" style="width: 100%; height: auto; border: 1px solid #e1e4e8; border-radius: 6px;">
+            <div class="caption">
+                Moving Image deformable change over time.
+            </div>
+        </div>
+
+        <!-- Static Image Section -->
+        <div style="flex: 1; min-width: 300px;">
+            <img src="./static/images/P35_2.jpg" alt="Static Deformation Visualization - Example 2" style="width: 100%; height: auto; border: 1px solid #e1e4e8; border-radius: 6px;">
+            <div class="caption">
+                Fixed Image.
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <h2>Problem Statement</h2>
     <div class="image-container medium">
         <img src="./static/images/sparse_gradients.png" alt="Gradient Backflow Limitation">
